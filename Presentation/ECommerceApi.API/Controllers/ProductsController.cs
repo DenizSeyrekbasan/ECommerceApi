@@ -21,19 +21,24 @@ namespace ECommerceApi.API.Controllers
         [HttpGet]
         public async Task Get()
         {
-            await _productWriteRepository.AddRangeAsync(new()
-            {
-                new(){Id=Guid.NewGuid(), Name="telefon", Price=100, CreatedDate=DateTime.UtcNow, Stock=10},
-                new(){Id=Guid.NewGuid(), Name="tablet", Price=200, CreatedDate=DateTime.UtcNow, Stock=10},
-                new(){Id=Guid.NewGuid(), Name="pc", Price=300, CreatedDate=DateTime.UtcNow, Stock=10},
-            });
-           var count = await _productWriteRepository.SaveAsync();
+            // await _productWriteRepository.AddRangeAsync(new()
+            // {
+            //     new(){Id=Guid.NewGuid(), Name="telefon", Price=100, CreatedDate=DateTime.UtcNow, Stock=10},
+            //     new(){Id=Guid.NewGuid(), Name="tablet", Price=200, CreatedDate=DateTime.UtcNow, Stock=10},
+            //     new(){Id=Guid.NewGuid(), Name="pc", Price=300, CreatedDate=DateTime.UtcNow, Stock=10},
+            // });
+            //var count = await _productWriteRepository.SaveAsync();
+
+            Product p = await _productReadRepository.GetByIdAsync("6e5abbb4-68cf-4b27-96fc-b4418dc51a55",false);
+            p.Name = "Mehmet";
+            await _productWriteRepository.SaveAsync();
+
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var product = await _productReadRepository.GetByIdAsync(id);
+            Product product = await _productReadRepository.GetByIdAsync(id);
             return Ok(product);
         }
     }
