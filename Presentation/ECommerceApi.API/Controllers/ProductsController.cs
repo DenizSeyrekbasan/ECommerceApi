@@ -18,7 +18,7 @@ namespace ECommerceApi.API.Controllers
         }
 
         [HttpGet]
-        public async void Get()
+        public async Task Get()
         {
             await _productWriteRepository.AddRangeAsync(new()
             {
@@ -26,7 +26,7 @@ namespace ECommerceApi.API.Controllers
                 new(){Id=Guid.NewGuid(), Name="tablet", Price=200, CreatedDate=DateTime.UtcNow, Stock=10},
                 new(){Id=Guid.NewGuid(), Name="pc", Price=300, CreatedDate=DateTime.UtcNow, Stock=10},
             });
-           await _productWriteRepository.SaveAsync();
+           var count = await _productWriteRepository.SaveAsync();
         }
     }
 }
