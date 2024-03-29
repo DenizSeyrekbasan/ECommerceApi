@@ -1,4 +1,5 @@
 ﻿using ECommerceApi.Application.Repositories;
+using ECommerceApi.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,13 @@ namespace ECommerceApi.API.Controllers
                 new(){Id=Guid.NewGuid(), Name="pc", Price=300, CreatedDate=DateTime.UtcNow, Stock=10},
             });
            var count = await _productWriteRepository.SaveAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            var product = await _productReadRepository.GetByIdAsync(id);
+            return Ok(product);
         }
     }
 }
