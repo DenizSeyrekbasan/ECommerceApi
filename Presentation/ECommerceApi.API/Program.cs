@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddPersistenceServices(); //IoC Container Configuration
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+policy.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyMethod()
+));
 
 builder.Services.AddControllers();
 
@@ -21,6 +24,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
